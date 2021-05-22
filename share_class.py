@@ -14,6 +14,10 @@ class Mentor:
         self.surname = surname
         self.courses_attached = []
 
+
+
+
+class Viewer(Mentor):
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
             if course in student.grades:
@@ -30,8 +34,15 @@ best_student.courses_in_progress += ['Python']
 cool_mentor = Mentor('Some', 'Buddy')
 cool_mentor.courses_attached += ['Python']
 
+cool_viewer = Viewer('Some', 'Buddy')
+cool_viewer.courses_attached += ['Python']
+
+cool_mentor.rate_hw(best_student, 'Python', 10)
+#todo Upadte something
 cool_mentor.rate_hw(best_student, 'Python', 10)
 cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
+
+
+cool_viewer.rate_hw(best_student, 'Python', 10)
 
 print(best_student.grades)
