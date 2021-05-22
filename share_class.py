@@ -38,7 +38,7 @@ cool_viewer = Viewer('Some', 'Buddy')
 cool_viewer.courses_attached += ['Python']
 
 cool_mentor.rate_hw(best_student, 'Python', 10)
-#todo Upadte something
+
 cool_mentor.rate_hw(best_student, 'Python', 10)
 cool_mentor.rate_hw(best_student, 'Python', 10)
 
