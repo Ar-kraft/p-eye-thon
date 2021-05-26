@@ -32,7 +32,8 @@ class Student:#added self.average_grade
         self.average_grade = 0 #add empty list for containg of grade value
 
     def rate_lw(self, lecturer, course, rate):#just adapted def rate_hw for class Student to class Lecturer
-        if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached and course in self.courses_in_progress:
+        if isinstance(lecturer, Lecturer) and course in lecturer.courses_attached and course in \
+                self.courses_in_progress:
             if course in lecturer.rates:
                 lecturer.rates[course] += [rate]
             else:
@@ -64,7 +65,8 @@ class Mentor:
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
+        if isinstance(student, Student) and course in self.courses_attached and \
+                course in student.courses_in_progress:
             if course in student.grades:
                 student.grades[course] += [grade]
             else:
@@ -85,7 +87,8 @@ class Lecturer(Mentor):
         self.average_grade = 0
     def __str__(self):
 
-        return "\nИмя: " + self.name + '\nФамилия: ' + self.surname + '\nСредняя оценка за лекции: ' + self.average_grade.__str__()
+        return "\nИмя: " + self.name + '\nФамилия: ' + self.surname + '\nСредняя оценка за лекции: ' \
+               + self.average_grade.__str__()
 
     def calc_avg(self):#inside calcuclation of rating
         self.qqq = getInner(self.rates)
