@@ -94,6 +94,9 @@ class Lecturer(Mentor):
         self.qqq = getInner(self.rates)
         self.average_grade = avg(self.qqq)
 
+    def  __lt__(self, other):
+        return self.average_grade < other.average_grade
+
 
 #new examples of different classe below
 
@@ -181,3 +184,7 @@ print(avg_grades_all_lecturers(list_of_lecturers, 'Git'))
 print("\n ________________________")
 print(cool_lecturer.rates)
 print(bad_lecturer.rates)
+print("\n ________________________")
+
+
+print(bad_lecturer.__lt__(cool_lecturer))
