@@ -1,63 +1,42 @@
 from pprint import pprint
-
 import requests
+import os
 
-# def sphero_request():
-#     url = "https://www.superheroapi.com/api.php/2619421814940190/"
-#     id = "332/"
-#     stats = "powerstats/"
-#     timeout = 5
-#     response = requests.get(url+id+stats, timeout=timeout)
-#     pprint(response.json())
-#
-# if __name__ == '__main__':
-#     sphero_request()
+pprint(os.listdir())
 
-def sphero_request_raw(name):
-    url = "https://www.superheroapi.com/api.php/2619421814940190/"
-    search = "search/"
-    # name = input('Enter name of')
-    name = name
-    timeout = 5
-    response = requests.get(url+search+name, timeout=timeout)
-    output_classified = (response.json())
-    print(output_classified['results'][0]['powerstats']['intelligence'])
-    return output_classified['results'][0]['powerstats']['intelligence']
+token="AQAAAAA9roRjAADLWwSba_R74EPPujOnSoQgPyg"
 
-char1 = 'Hulk'
-char2 = 'Captain America'
-char3 = 'Thanos'
 
-# if __name__ == '__main__':
-    # sphero_request_raw(char1)
-    # sphero_request_raw(char2)
-    # sphero_request_raw(char3)
+class YaUploader:
+    def __init__(self, file_path: str):
+        self.file_path = file_path
 
-num1 = int(sphero_request_raw(char1))
-num2 = int(sphero_request_raw(char2))
-num3 = int(sphero_request_raw(char3))
+    def __init__(self, token):
+        self.token = token
 
-if(num1 > num2):
-    if(num1 > num3):
-        print("Smartest hero is "+ str(char1))
-    else:
-        print("Smartest hero is "+ str(char3))
-else:
-    if(num2 > num3):
-        print("Smartest hero is " + str(char2))
-    else:
-        print("Smartest hero is " + str(char3))
+    def get_headers(self):
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': 'OAuth {}'.format(self.token)
+        }
 
-# array_of_id = {'Hulk': '332', 'Captain America': '149'}
-#
-# def sphero_request_id():
-#     url = "https://www.superheroapi.com/api.php/2619421814940190/"
-#     ID = array_of_id['Hulk']+"/"
-#     stats = "powerstats/"
-#     timeout = 5
-#     response = requests.get(url+ID+stats, timeout=timeout)
-#     output_dict = (response.json())
-#     pprint(output_dict["intelligence"])
-#
-# if __name__ == '__main__':
-#     sphero_request_id()
+    def _get_upload_link(self, disk_file_path):
+        upload_url = 'https://cloud-api.yandex.net/v1/disk/resources/upload'
+        headers = self.get_headers()
+        params = {"path": disk_file_path, 'overwrite':"true"}
+        response = requests.get(upload_url, headers=headers, params=params)
+        pprint(response.json())
+        return (response.json())
+
+     def upload(self, disk_file_path, filename):
+            href = self._get_upload_link(disk_file_path=disk_file_path)
+            response = requests.put(href, data=open(filename, 'rb'))
+            response.raise_for_status()
+            if response.status_code == 201:
+                print('Success')
+
+if __name__ == '__main__':
+    uploader = YaUploader('c:\my_folder\file.txt')
+    result = uploader.upload()
+
+
